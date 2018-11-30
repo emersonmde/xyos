@@ -13,13 +13,13 @@ Build Requirements:
  - gcc/ld
 
 Runtime Requirements:
- - qemu-system-i386 or qemu-system-x86_64
+ - qemu-system-i386, qemu-system-x86_64, or a bootloader like GRUB
 
 ## How to Run
 
  ```
 $ make
-$ qemu-system-x86_64 -kernel xos
+$ qemu-system-x86_64 -kernel xyos
  ```
 
 ## Author
