@@ -85,6 +85,48 @@ Add the cross compiler tools to your path:
 export PATH="/usr/local/cross/bin:$PATH"
 ```
 
+Install GNU Make, automake and autogen:
+
+```
+brew install make automake autogen
+```
+
+Build and install objconv (needed for grub):
+
+```
+cd $HOME/src
+curl https://www.agner.org/optimize/objconv.zip > objconv.zip
+mkdir -p build-objconv
+unzip objconv.zip -d build-objconv
+
+cd build-objconv
+unzip source.zip -d src
+g++ -o objconv -O2 src/*.cpp --prefix="$PREFIX"
+cp objconv $PREFIX/bin
+```
+
+Build and install grub:
+
+```
+curl ftp://ftp.gnu.org/gnu/grub/grub-2.02.tar.gz >> $HOME/src/grub-2.02.tar.gz
+cd $HOME/src
+tar -zxf grub-2.02.tar.gz
+cd grub-2.02
+./autogen.sh
+mkdir $HOME/src/build-grub
+cd $HOME/src/build-grub
+../grub-2.02/configure --disable-werror TARGET_CC=$TARGET-gcc TARGET_OBJCOPY=$TARGET-objcopy TARGET_STRIP=$TARGET-strip TARGET_NM=$TARGET-nm TARGET_RANLIB=$TARGET-ranlib --target=$TARGET --prefix=$PREFIX
+make
+sudo make install
+```
+
+And finally, the kernel build complains if its using the built in xocde make so we'll use GNU make:
+
+```
+export MAKE=gmake
+```
+
+
 ### Cross Compiling GCC with Linux (Arch)
 
 Download sources for binutils and GCC
@@ -139,6 +181,12 @@ Add the cross compiler tools to your path:
 ```
 export PATH="/usr/local/cross/bin:$PATH"
 ```
+
+## Building
+
+### MacOS Mojave
+
+Install GNU Make
 
 ## Testing
 
