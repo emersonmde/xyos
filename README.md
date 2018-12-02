@@ -184,21 +184,22 @@ export PATH="/usr/local/cross/bin:$PATH"
 
 ## Building
 
-### MacOS Mojave
-
-Install GNU Make
+Run `./build.sh` which launches make for the kernel and libc
 
 ## Testing
 
 ### Using qemu
 
+The `./qemu.sh` script will run `./build.sh`, bundle the kernel into an iso using `./iso.sh` and run it using qemu.
+
  ```
-qemu-system-i386 -kernel xyos
+./qemu.sh
  ```
 
 ## Author
 
 Matthew Emerson
+wiki.osdev.org (meaty-skeleton build scripts and layout)
 
 ## License
 
