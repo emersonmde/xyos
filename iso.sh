@@ -8,6 +8,7 @@ mkdir -p isodir/boot/grub
 
 cp sysroot/boot/xyos isodir/boot/xyos
 cat > isodir/boot/grub/grub.cfg << EOF
+set timeout=1
 menuentry "XyOS" {
 	multiboot /boot/xyos
 }
