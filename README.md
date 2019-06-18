@@ -136,6 +136,13 @@ And finally, the kernel build complains if its using the built in xocde make so 
 export MAKE=gmake
 ```
 
+(Optional) I also added the following PATHs to my shell rc:
+
+```
+export PATH=$HOME/bin:/usr/local/cross/bin:$PATH
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+```
 
 ### Cross Compiling GCC with Linux (Arch)
 
