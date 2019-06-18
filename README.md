@@ -70,8 +70,8 @@ export LD=/usr/local/bin/gcc-8
 Compile GCC
 
 ```
-mkdir $HOME/build-gcc
-cd $HOME/build-gcc
+mkdir $HOME/src/build-gcc
+cd $HOME/src/build-gcc
 ../gcc-8.2.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers --enable-interwork --enable-multilib --with-gmp=/usr --with-mpc=/opt/local --with-mpfr=/opt/local
 make all-gcc
 make all-target-libgcc
@@ -95,15 +95,18 @@ Build and install objconv (needed for grub):
 
 ```
 cd $HOME/src
-curl https://www.agner.org/optimize/objconv.zip > objconv.zip
-mkdir -p build-objconv
+curl https://www.agner.org/optimize/objconv.zip > $HOME/src/objconv.zip
+mkdir build-objconv
 unzip objconv.zip -d build-objconv
 
-cd build-objconv
+cd $HOME/src/build-objconv
 unzip source.zip -d src
 g++ -o objconv -O2 src/*.cpp --prefix="$PREFIX"
 cp objconv $PREFIX/bin
 ```
+
+NOTE: I was having some trouble building with GCC-9, so I unset CC/CXX/CPP/LD that were set earlier to use
+the built in LLVM compiler which seemed to work
 
 Build and install grub:
 
@@ -118,6 +121,13 @@ cd $HOME/src/build-grub
 ../grub-2.02/configure --disable-werror TARGET_CC=$TARGET-gcc TARGET_OBJCOPY=$TARGET-objcopy TARGET_STRIP=$TARGET-strip TARGET_NM=$TARGET-nm TARGET_RANLIB=$TARGET-ranlib --target=$TARGET --prefix=$PREFIX
 make
 sudo make install
+```
+
+We need to install coreutils (to make building a bit easier), xorriso for GRUB, and Qemu for
+emulation
+
+```
+brew install coreutils xorriso qemu
 ```
 
 And finally, the kernel build complains if its using the built in xocde make so we'll use GNU make:
