@@ -1,8 +1,8 @@
-DEFAULT_HOST!=../default-host.sh
+DEFAULT_HOST=$(HOST)
 $(info $$DEFAULT_HOST is [${DEFAULT_HOST}])
 HOST?=DEFAULT_HOST
 $(info $$HOST is [${HOST}])
-HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
+HOSTARCH!=$(SCRIPTDIR)/target-triplet-to-arch.sh $(HOST)
 $(info $$HOSTARCH is [${HOSTARCH}])
 
 CFLAGS?=-O2 -g
