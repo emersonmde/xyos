@@ -26,6 +26,13 @@ stack_top:
 _start:
 	movl $stack_top, %esp
 
+	# Initialize GDT
+	call init_gdt
+
+	# TODO: Enter protected mode after setting up IDT
+	#cli
+	#mov %eax, %cr0
+
 	# Call the global constructors.
 	call _init
 
