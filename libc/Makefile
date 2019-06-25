@@ -16,13 +16,12 @@ EXEC_PREFIX?=$(PREFIX)
 INCLUDEDIR?=$(PREFIX)/include
 LIBDIR?=$(EXEC_PREFIX)/lib
 
-CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
-CPPFLAGS:=$(CPPFLAGS) -D__is_libc -Iinclude
-LIBK_CFLAGS:=$(CFLAGS)
-LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_libk
-
-
 ARCHDIR=arch/$(HOSTARCH)
+
+CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra -D__is_libc -Iinclude -I../kernel/$(ARCHDIR)/include
+CPPFLAGS:=$(CPPFLAGS)
+LIBK_CFLAGS:=$(CFLAGS) -D__is_libk
+LIBK_CPPFLAGS:=$(CPPFLAGS)
 
 include $(ARCHDIR)/make.config
 

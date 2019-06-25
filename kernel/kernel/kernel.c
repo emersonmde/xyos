@@ -1,8 +1,13 @@
 #include <stdio.h>
 
-#include <kernel/tty.h>
+#include <tty.h>
 
 void kernel_main(void) {
 	terminal_initialize();
-	printf("Welcome to XyOS!\n");
+    printf("testing scolling");
+    for (int i = 0; i < 5000; i++)  {
+        printf(".");
+    }
+
+	printf("\nWelcome to XyOS!\n");
 }

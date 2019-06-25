@@ -29,6 +29,9 @@ _start:
 	# Initialize GDT
 	call init_gdt
 
+	# Setup paging
+	call init_page_directory
+
 	# TODO: Enter protected mode after setting up IDT
 	#cli
 	#mov %eax, %cr0

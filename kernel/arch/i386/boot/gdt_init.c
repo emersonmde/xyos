@@ -62,9 +62,9 @@ void init_gdt() {
     encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0x92, .flags=0xC});
     // TODO: Add TSS segment
     // Set user code segment
-    /*encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0xFA, .flags=0xC});*/
+    encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0xFA, .flags=0xC});
     // Set user data segment
-    /*encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0xF2, .flags=0xC});*/
+    encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0xF2, .flags=0xC});
 
     /*flush_gdt((uint32_t)&gdt.descriptor);*/
 }
