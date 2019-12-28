@@ -1,6 +1,10 @@
 #include <stdint.h>
+#include <stdio.h>
 
-void flush_gdt(uint32_t);
+#include <stdint.h>
+
+void flush_gdt();
+void set_gdt(uint32_t addr, uint16_t limit);
 
 typedef struct {
     uint16_t limit_low;
@@ -54,17 +58,20 @@ void encode_gdt_entry(gdt_entry_t *target, unencoded_gdt_entry_t source) {
 void init_gdt() {
     gdt.descriptor.base = (uint32_t)&gdt.entries[0];
     gdt.descriptor.limit = sizeof(gdt.entries) - 1;
+
+    // Creating 4 segments that overlap all 4GB of address space
     // Set null segment
     encode_gdt_entry(&gdt.entries[0], (unencoded_gdt_entry_t){.base=0, .limit=0, .access=0, .flags=0});
     // Set kernel code segment
     encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0x9A, .flags=0xC});
     // Set kernel data segment
-    encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0x92, .flags=0xC});
+    encode_gdt_entry(&gdt.entries[2], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0x92, .flags=0xC});
     // TODO: Add TSS segment
     // Set user code segment
-    encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0xFA, .flags=0xC});
+    encode_gdt_entry(&gdt.entries[3], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0xFA, .flags=0xC});
     // Set user data segment
-    encode_gdt_entry(&gdt.entries[1], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0xF2, .flags=0xC});
+    encode_gdt_entry(&gdt.entries[4], (unencoded_gdt_entry_t){.base=0, .limit=0xffffffff, .access=0xF2, .flags=0xC});
 
-    /*flush_gdt((uint32_t)&gdt.descriptor);*/
+    set_gdt(gdt.entries, sizeof(gdt.entries));
+    flush_gdt();
 }

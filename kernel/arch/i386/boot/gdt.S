@@ -7,7 +7,7 @@ set_gdt:
 	movl 4(%esp), %eax
 	movl %eax, (base)
 	movw 8(%esp), %ax
-	movw %ax, (gdtr)
+	movw %ax, (limit)
 	lgdt (gdtr)
 	ret
 

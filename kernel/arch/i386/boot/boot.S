@@ -26,15 +26,11 @@ stack_top:
 _start:
 	movl $stack_top, %esp
 
-	# Initialize GDT
-	call init_gdt
+	# disable interrupts until we initialize the GDT
+	cli
 
-	# Setup paging
-	call init_page_directory
-
-	# TODO: Enter protected mode after setting up IDT
-	#cli
-	#mov %eax, %cr0
+	# TODO: Setup paging
+	#call init_page_directory
 
 	# Call the global constructors.
 	call _init
@@ -45,5 +41,5 @@ _start:
 	# Hang if kernel_main unexpectedly returns.
 	cli
 1:	hlt
-	jmp 1b
+	jmp 1
 .size _start, . - _start

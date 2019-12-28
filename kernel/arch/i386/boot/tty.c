@@ -3,9 +3,9 @@
 #include <stdint.h>
 #include <string.h>
 
-#include <tty.h>
+#include <arch/i386/tty.h>
 
-#include <vga.h>
+#include <arch/i386/vga.h>
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -49,7 +49,6 @@ void terminal_scroll(size_t lines) {
 			terminal_buffer[i] = terminal_buffer[VGA_WIDTH * lines_to_scroll + i];
 		terminal_row -= lines_to_scroll;
 	}
-	
 }
 
 void terminal_putchar(char c) {
