@@ -12,7 +12,6 @@ void abort(void);
 
 void itoa(int, char *, int);
 
-void reverse(char *);
 
 #ifdef __cplusplus
 }

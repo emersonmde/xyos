@@ -5,6 +5,7 @@
 #include <sh.h>
 
 void init_gdt();
+void idt_init();
 void init_keyboard();
 
 void kernel_main(void) {

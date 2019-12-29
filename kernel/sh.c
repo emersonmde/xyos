@@ -1,22 +1,8 @@
+#include <sh.h>
 #include <stdio.h>
 #include <string.h>
 #include <arch/i386/tty.h>
 #include <stdbool.h>
-
-#define MAX_CMD_BUF_LEN 100
-#define MAX_ARG_LEN 100
-#define MAX_ARGS 25
-
-// TODO: move to process specific heap allociation
-typedef struct {
-    char buf[MAX_CMD_BUF_LEN];
-    size_t len;
-    bool complete;
-
-    // TODO: malloc variable length argument lists
-    unsigned int argc;
-    char argv[MAX_ARGS][MAX_ARG_LEN];
-} sh_cmd_ctx_t;
 
 void init_sh_cmd_ctx(sh_cmd_ctx_t *ctx) {
     ctx->complete = false;

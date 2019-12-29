@@ -14,7 +14,7 @@ void irq1_handler() {
     uint8_t scancode = inb(0x60);
     // j down = 33 = 21
     // j up == 161 = A1
-    extern process_scancode(uint8_t);
+    extern void process_scancode(uint8_t);
     process_scancode(scancode);
     outb(0x20, 0x20);
 }
