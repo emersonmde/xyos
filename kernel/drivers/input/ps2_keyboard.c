@@ -50,6 +50,7 @@ void init_keyboard() {
 }
 
 void process_scancode(uint8_t scancode) {
+    // TODO: check for key combo's (ex shift + 1 for '!')
     if (scancode & 0x80) {
         // key released
     } else {

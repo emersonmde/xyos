@@ -23,6 +23,10 @@ void kernel_main(void) {
     init_keyboard();
     printf("Done\n");
 
+    printf("Initializing STDIN... ");
+    init_stdin();
+    printf("Done\n");
+
     printf("launching sh...\n");
     run_sh();
 

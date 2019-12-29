@@ -13,6 +13,7 @@ static bool print(const char *data, size_t length) {
 	return true;
 }
 
+// TODO: BUG: using multiple %d's followed by %s results in buffer overflows and other strange errors
 int printf(const char * restrict format, ...) {
 	va_list parameters;
 	va_start(parameters, format);

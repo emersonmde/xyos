@@ -13,6 +13,7 @@ int printf(const char* __restrict, ...);
 int putchar(int);
 int puts(const char*);
 
+void init_stdin();
 void stdin_putchar(char);
 int stdin_getchar();
 

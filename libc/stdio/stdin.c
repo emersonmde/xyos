@@ -11,9 +11,14 @@ struct {
     uint8_t len;
 } stdin;
 
+void init_stdin() {
+    stdin.start = 0;
+    stdin.end = 0;
+    stdin.len = 0;
+}
 
 void stdin_print_buf() {
-    printf("STDIN %d, %d, %d:", stdin.start, stdin.end, stdin.len);
+    printf("STDIN %d:", stdin.len);
     for (uint8_t i = 0; i < stdin.len; i++)
         putchar(stdin.buf[i]);
     printf("\n");
@@ -21,14 +26,12 @@ void stdin_print_buf() {
 
 // TODO: length is not being set correctly or being clobbered
 void stdin_putchar(char c) {
-    stdin_print_buf();
     stdin.len++;
     stdin.buf[stdin.end++] = c;
     if (stdin.end >= STDIN_BUF_LEN)
         stdin.end = 0;
     if (stdin.len > STDIN_BUF_LEN)
         stdin_getchar();
-    stdin_print_buf();
 }
 
 int stdin_getchar() {
