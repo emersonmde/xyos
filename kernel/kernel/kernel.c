@@ -44,11 +44,11 @@ void kernel_main(void) {
     init_gdt();
     printf("Done\n");
 
-    printf("initializing PICs.. ");
-    init_pics(0x20, 0x28);
+    printf("Initializing IDT... ");
+    idt_init();
     printf("Done\n");
 
-    // TODO: Setup IDT and interrupts
-
     printf("\nWelcome to XyOS!\n");
+
+    for(;;){}
 }

@@ -3,9 +3,6 @@
 
 #include <stdint.h>
 
-void flush_gdt();
-void set_gdt(uint32_t addr, uint16_t limit);
-
 typedef struct {
     uint16_t limit_low;
     uint16_t base_low;
@@ -31,6 +28,9 @@ static struct {
     gdt_entry_t entries[5];
     gdt_descriptor_t descriptor;
 } gdt;
+
+void flush_gdt();
+void set_gdt(gdt_entry_t *base, uint16_t limit);
 
 void encode_gdt_entry(gdt_entry_t *target, unencoded_gdt_entry_t source) {
     // Encode 4 flag bits
