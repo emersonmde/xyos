@@ -1,5 +1,6 @@
 #include <arch/i386/io.h>
 #include <stdio.h>
+#include <stdint.h>
 
 // Each of these has to send EOI outb(0x20, 0x20)
 // Programmable Interrupt Timer Interrupt
@@ -7,9 +8,14 @@ void irq0_handler() {
     outb(0x20, 0x20);
 }
 
+// TODO: allow driver to set interrupt handler
 // Keyboard Interrupt
 void irq1_handler() {
-    printf("\nKeyboard Interrupt\n");
+    uint8_t scancode = inb(0x60);
+    // j down = 33 = 21
+    // j up == 161 = A1
+    extern process_scancode(uint8_t);
+    process_scancode(scancode);
     outb(0x20, 0x20);
 }
 

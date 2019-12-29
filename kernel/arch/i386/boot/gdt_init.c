@@ -24,7 +24,7 @@ typedef struct {
     uint8_t flags;
 } unencoded_gdt_entry_t;
 
-static struct {
+struct {
     gdt_entry_t entries[5];
     gdt_descriptor_t descriptor;
 } gdt;
