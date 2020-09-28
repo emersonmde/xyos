@@ -32,12 +32,12 @@ brew install gcc
 Now download the source for [binutils](https://ftp.gnu.org/gnu/binutils/) and [gcc](http://mirrors-usa.go-parts.com/gcc/releases/):
 
 ```
-mkdir -p $HOME/src
-curl https://ftp.gnu.org/gnu/binutils/binutils-2.31.tar.gz >> $HOME/src/binutils-2.31.tar.gz
-curl http://mirrors-usa.go-parts.com/gcc/releases/gcc-8.2.0/gcc-8.2.0.tar.gz >> $HOME/src/gcc-8.2.0.tar.gz
-cd $HOME/src
-tar -zxf binutils-2.31.tar.gz
-tar -zxf gcc-8.2.0.tar.gz
+mkdir -p $HOME/workspace/build
+curl https://ftp.gnu.org/gnu/binutils/binutils-2.35.tar.gz >> $HOME/workspace/build/binutils-2.35.tar.gz
+curl https://bigsearcher.com/mirrors/gcc/releases/gcc-10.2.0/gcc-10.2.0.tar.gz >> $HOME/workspace/build/gcc-10.2.0.tar.gz
+cd $HOME/workspace/build
+tar -zxf binutils-2.35.tar.gz
+tar -zxf gcc-10.2.0.tar.gz
 ```
 
 Setup install directory and targets:
@@ -51,9 +51,9 @@ export PATH="$PREFIX/bin:$PATH"
 Compile binutils:
 
 ```
-mkdir $HOME/src/build-binutils
-cd $HOME/src/build-binutils
-../binutils-2.31/configure --prefix="$PREFIX" --target=$TARGET --enable-interwork --enable-multilib --disable-nls --disable-werror
+mkdir $HOME/workspace/build/build-binutils
+cd $HOME/workspace/build/build-binutils
+../binutils-2.35/configure --prefix="$PREFIX" --target=$TARGET --enable-interwork --enable-multilib --disable-nls --disable-werror
 make
 sudo make install
 ```
@@ -61,18 +61,18 @@ sudo make install
 Set real GCC as the compiler for building the GCC cross compiler:
 
 ```
-export CC=/usr/local/bin/gcc-8
-export CXX=/usr/local/bin/g++-8
-export CPP=/usr/local/bin/cpp-8
-export LD=/usr/local/bin/gcc-8
+export CC=/usr/local/bin/gcc-10
+export CXX=/usr/local/bin/g++-10
+export CPP=/usr/local/bin/cpp-10
+export LD=/usr/local/bin/gcc-10
 ```
 
 Compile GCC
 
 ```
-mkdir $HOME/src/build-gcc
-cd $HOME/src/build-gcc
-../gcc-8.2.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers --enable-interwork --enable-multilib --with-gmp=/usr --with-mpc=/opt/local --with-mpfr=/opt/local
+mkdir $HOME/workspace/build/build-gcc
+cd $HOME/workspace/build/build-gcc
+../gcc-10.2.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers --enable-interwork --enable-multilib --with-gmp=/usr --with-mpc=/opt/local --with-mpfr=/opt/local
 make all-gcc
 make all-target-libgcc
 sudo make install-gcc
@@ -94,30 +94,30 @@ brew install make automake autogen
 Build and install objconv (needed for grub):
 
 ```
-cd $HOME/src
-curl https://www.agner.org/optimize/objconv.zip > $HOME/src/objconv.zip
+cd $HOME/workspace/build
+curl https://www.agner.org/optimize/objconv.zip > $HOME/workspace/build/objconv.zip
 mkdir build-objconv
 unzip objconv.zip -d build-objconv
 
-cd $HOME/src/build-objconv
+cd $HOME/workspace/build/build-objconv
 unzip source.zip -d src
 g++ -o objconv -O2 src/*.cpp --prefix="$PREFIX"
-cp objconv $PREFIX/bin
+sudo cp objconv $PREFIX/bin
 ```
 
-NOTE: I was having some trouble building with GCC-9, so I unset CC/CXX/CPP/LD that were set earlier to use
+NOTE: I was having some trouble building with GCC-10, so I unset CC/CXX/CPP/LD that were set earlier to use
 the built in LLVM compiler which seemed to work
 
 Build and install grub:
 
 ```
-curl ftp://ftp.gnu.org/gnu/grub/grub-2.02.tar.gz >> $HOME/src/grub-2.02.tar.gz
-cd $HOME/src
+curl ftp://ftp.gnu.org/gnu/grub/grub-2.02.tar.gz >> $HOME/workspace/build/grub-2.02.tar.gz
+cd $HOME/workspace/build
 tar -zxf grub-2.02.tar.gz
 cd grub-2.02
 ./autogen.sh
-mkdir $HOME/src/build-grub
-cd $HOME/src/build-grub
+mkdir $HOME/workspace/build/build-grub
+cd $HOME/workspace/build/build-grub
 ../grub-2.02/configure --disable-werror TARGET_CC=$TARGET-gcc TARGET_OBJCOPY=$TARGET-objcopy TARGET_STRIP=$TARGET-strip TARGET_NM=$TARGET-nm TARGET_RANLIB=$TARGET-ranlib --target=$TARGET --prefix=$PREFIX
 make
 sudo make install
@@ -149,10 +149,10 @@ export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 Download sources for binutils and GCC
 
 ```
-mkdir -p $HOME/src
-curl https://ftp.gnu.org/gnu/binutils/binutils-2.31.tar.gz >> $HOME/src/binutils-2.31.tar.gz
-curl http://mirrors-usa.go-parts.com/gcc/releases/gcc-8.2.0/gcc-8.2.0.tar.gz >> $HOME/src/gcc-8.2.0.tar.gz
-cd $HOME/src
+mkdir -p $HOME/workspace/build
+curl https://ftp.gnu.org/gnu/binutils/binutils-2.31.tar.gz >> $HOME/workspace/build/binutils-2.31.tar.gz
+curl http://mirrors-usa.go-parts.com/gcc/releases/gcc-8.2.0/gcc-8.2.0.tar.gz >> $HOME/workspace/build/gcc-8.2.0.tar.gz
+cd $HOME/workspace/build
 tar -zxf binutils-2.31.tar.gz
 tar -zxf gcc-8.2.0.tar.gz
 ```
@@ -168,8 +168,8 @@ export PATH="$PREFIX/bin:$PATH"
 Compile binutils:
 
 ```
-mkdir $HOME/src/build-binutils
-cd $HOME/src/build-binutils
+mkdir $HOME/workspace/build/build-binutils
+cd $HOME/workspace/build/build-binutils
 ../binutils-2.31/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
 make
 sudo make install
