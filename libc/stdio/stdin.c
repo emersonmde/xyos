@@ -20,7 +20,7 @@ void init_stdin() {
 void stdin_print_buf() {
     printf("STDIN %d:", stdin.len);
     for (uint8_t i = 0; i < stdin.len; i++)
-        putchar(stdin.buf[i]);
+        put_char(stdin.buf[i]);
     printf("\n");
 }
 

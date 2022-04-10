@@ -39,7 +39,8 @@ void run_sh() {
                 break;
             }
             sh_cmd_ctx.buf[sh_cmd_ctx.len++] = c;
-            putchar(c);
+            put_char((int)c);
+	    //printf("%c", c);
         }
 
         if (sh_cmd_ctx.complete) {

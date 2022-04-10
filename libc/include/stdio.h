@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 int printf(const char* __restrict, ...);
-int putchar(int);
+int put_char(int);
 int puts(const char*);
 
 void init_stdin();

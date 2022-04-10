@@ -8,6 +8,7 @@ fi
 cat > $1 << EOF
 set timeout=0
 menuentry "XyOS" {
+	insmod all_video
 	multiboot /boot/xyos
 }
 EOF
