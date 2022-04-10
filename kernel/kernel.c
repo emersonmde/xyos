@@ -9,7 +9,6 @@ void idt_init();
 void init_keyboard();
 
 void kernel_main(void) {
-    // Terminal needs to be setup to display STDOUT
 	terminal_initialize();
 	printf("Terminal Initialized\n");
 
